@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -15,26 +14,15 @@ import (
 	"github.com/pterm/pterm"
 )
 
-// Usage example:
-// log 1h SCENTRE-5912
-// log 1 5814
-// log 30m review
-// log 1h review yesterday
-// log 1h review monday
-// log 1h 5214
-// log 1h review monday-friday - WIP
 func main() {
 	conf, err := LoadConfig()
 	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			return
-		}
 		fmt.Printf("cannot load config: %s\n", err)
 		return
 	}
 
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: todo <time> <task> [day]")
+		fmt.Println("Usage: todo <time> <task> [day] [comment]")
 		return
 	}
 
@@ -51,6 +39,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
 	dayInput := safeGet(os.Args, 3)
 	logDay, err := convertToDay(dayInput)
 	if err != nil {

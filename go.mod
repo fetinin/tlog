@@ -3,14 +3,17 @@ module github.com/What-If-I/tlog
 go 1.19
 
 require (
+	atomicgo.dev/cursor v0.1.1
 	github.com/BurntSushi/toml v1.2.0
 	github.com/andygrunwald/go-jira v1.16.0
+	github.com/manifoldco/promptui v0.9.0
+	github.com/pterm/pterm v0.12.45
 	github.com/stretchr/testify v1.8.0
 )
 
 require (
-	atomicgo.dev/cursor v0.1.1 // indirect
 	atomicgo.dev/keyboard v0.2.8 // indirect
+	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
@@ -21,7 +24,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/pterm/pterm v0.12.45 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/trivago/tgo v1.0.7 // indirect
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect

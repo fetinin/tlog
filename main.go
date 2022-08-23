@@ -1,16 +1,19 @@
 package main
 
 import (
-	"bufio"
+	"errors"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
 
+	"atomicgo.dev/cursor"
 	"github.com/BurntSushi/toml"
 	"github.com/andygrunwald/go-jira"
+	"github.com/manifoldco/promptui"
 	"github.com/pterm/pterm"
 )
 
@@ -22,7 +25,7 @@ func main() {
 	}
 
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: todo <time> <task> [day] [comment]")
+		pterm.Println(pterm.Yellow("Usage: tlog <time> <task> [day] [comment]"))
 		return
 	}
 
@@ -162,7 +165,7 @@ func LoadConfig() (Config, error) {
 		if err != nil {
 			return Config{}, fmt.Errorf("create config: %w", err)
 		}
-		fmt.Printf("Config created saved at: %s", homeConfig)
+		pterm.Println(pterm.Green(pterm.Sprintf("Config saved at: %s", homeConfig)))
 	}
 
 	var cfg Config
@@ -189,22 +192,79 @@ func setupConfig() Config {
 	area, _ := pterm.DefaultArea.Start()
 	area.Update(
 		pterm.DefaultSection.Sprint("Hello there 👋"),
-		pterm.LightBlue("Let's perform some basic setup. Enter you JIRA username below:"),
+		pterm.LightBlue("Let's perform some basic setup."),
 	)
-
-	cfg.JiraLogin = readLine()
-
-	area.Update(pterm.LightBlue("Got it.\nYour login is: "), pterm.Yellow(cfg.JiraLogin))
 	time.Sleep(2 * time.Second)
-
-	area.Update(pterm.LightBlue("🤫 Now enter your password: "))
-
-	cfg.JiraPassword = readLine()
-
-	area.Update(pterm.LightBlue("Almost done!\n Now enter JIRA url: "))
-	cfg.JiraURL = readLine()
-
+	area.Clear()
 	area.Stop()
+
+	for {
+		requiredValidator := func(input string) error {
+			if input == "" {
+				return errors.New("value is required")
+			}
+			return nil
+		}
+
+		prompt := promptui.Prompt{
+			Label:       pterm.LightBlue("Enter you JIRA username"),
+			HideEntered: true,
+			Validate:    requiredValidator,
+		}
+		result, err := prompt.Run()
+		if err != nil {
+			os.Exit(0)
+		}
+		cfg.JiraLogin = result
+
+		prompt = promptui.Prompt{
+			Label:       pterm.LightBlue("Now enter your password 🤫"),
+			HideEntered: true,
+			Mask:        '*',
+			Validate:    requiredValidator,
+		}
+		result, err = prompt.Run()
+		if err != nil {
+			os.Exit(0)
+		}
+		cfg.JiraPassword = result
+
+		urlValidator := func(input string) error {
+			u, err := url.ParseRequestURI(input)
+			if err != nil {
+				return err
+			}
+			if u.Host == "" {
+				return errors.New("host is missing")
+			}
+			return nil
+		}
+
+		prompt = promptui.Prompt{
+			Label:       pterm.LightBlue("Almost done! Now enter JIRA url"),
+			HideEntered: true,
+			Validate:    urlValidator,
+		}
+		result, err = prompt.Run()
+		if err != nil {
+			os.Exit(0)
+		}
+		cfg.JiraURL = result
+
+		confirmed, _ := pterm.DefaultInteractiveConfirm.Show(pterm.Sprint(
+			pterm.LightBlue("Got it👌"),
+			pterm.LightBlue("\nYour login is: "), pterm.Yellow(cfg.JiraLogin),
+			pterm.LightBlue("\nPassword is: "), pterm.Yellow(cfg.JiraPassword),
+			pterm.LightBlue("\nJIRA url is: "), pterm.Yellow(cfg.JiraURL),
+			pterm.LightBlue("\nCorrect?"),
+		))
+		if confirmed {
+			cursor.ClearLinesUp(5)
+			break
+		}
+		cursor.ClearLinesUp(5)
+	}
+
 	return cfg
 }
 
@@ -220,10 +280,4 @@ DefaultProject = ""
 	tmpl = strings.TrimSpace(tmpl)
 	out := fmt.Sprintf(tmpl, cfg.JiraURL, cfg.JiraLogin, cfg.JiraPassword)
 	return os.WriteFile(path, []byte(out), 0644)
-}
-
-func readLine() string {
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	return scanner.Text()
 }

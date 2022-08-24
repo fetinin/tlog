@@ -1,5 +1,5 @@
 # ⏱ Tlog - time saving utility
-Simple CLI that helps log time to JIRA issue.
+Simple CLI that helps log time on JIRA issues.
 
 ## Install
 go >= 1.18 required

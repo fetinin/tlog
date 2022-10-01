@@ -2,10 +2,22 @@
 Simple CLI that helps log time on JIRA issues.
 
 ## Install
-go >= 1.18 required
+
+### MacOS
+```bash
+brew What-If-I/tap/tlog/
+```
+
+### Linux
+```bash
+curl -sfL https://raw.githubusercontent.com/What-If-I/tlog/master/install.sh | sh
+```
+
+### From source
 ```bash
 go install github.com/What-If-I/tlog@latest 
 ```
+_go >= 1.18 required_
 
 ## Usage
 ```bash

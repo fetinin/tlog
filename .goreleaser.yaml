@@ -26,7 +26,30 @@ snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
+  use: github
   filters:
     exclude:
       - '^docs:'
       - '^test:'
+      - 'merge conflict'
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+      - go mod tidy
+
+brews:
+  - tap:
+      owner: what-if-i
+      name: homebrew-tap
+    folder: Formula
+    goarm: "7"
+    homepage: https://github.com/What-If-I/tlog
+    description: Simple CLI that helps log time on JIRA issues.
+    license: MIT
+    test: |
+      system "test -f #{bin}/tlog"
+    dependencies:
+      - name: go
+        type: optional
+    install: |-
+      bin.install "tlog"

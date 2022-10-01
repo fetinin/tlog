@@ -39,4 +39,4 @@ review = "INT-24"
 ### Things to do
 - [ ] Add `config show`, `config set-alias`, `config set-project` commands
 - [ ] Allow to log multiple days at once like `tlog 1h review monday-friday`
-- [ ] Automate releases with https://goreleaser.com/quick-start/
+- [x] Automate releases with https://goreleaser.com/quick-start/

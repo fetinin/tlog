@@ -1,6 +1,17 @@
 # ⏱ Tlog - time saving utility
 Simple CLI that helps log time on JIRA issues.
 
+## Usage
+```bash
+log 1h SCENTRE-5912     # log 1 hour into SCENTRE-5912 for today
+log 1 5814              # log 1 hour into {{DefaultProject}}-5814
+log 30m review          # log 30 minutes into task aliased "review"
+log 1h review yesterday # log 1 hour yesterday
+log 1h review monday    # log 1 hour review for monday for current week
+log 1h review mon       # log 1 hour review for monday for current week
+log 1h review 22        # log 1 hour review for 22nd if current month
+```
+
 ## Install
 
 ### MacOS
@@ -18,17 +29,6 @@ curl -sfL https://raw.githubusercontent.com/What-If-I/tlog/master/install.sh | s
 go install github.com/What-If-I/tlog@latest 
 ```
 _go >= 1.18 required_
-
-## Usage
-```bash
-log 1h SCENTRE-5912     # log 1 hour into SCENTRE-5912 for today
-log 1 5814              # log 1 hour into {{DefaultProject}}-5814
-log 30m review          # log 30 minutes into task aliased "review"
-log 1h review yesterday # log 1 hour yesterday
-log 1h review monday    # log 1 hour review for monday for current week
-log 1h review mon       # log 1 hour review for monday for current week
-log 1h review 22        # log 1 hour review for 22nd if current month
-```
 
 ## Configuration
 Upon first run, utility will create config file called `.time_logger_conf.toml` at your home directory. You can edit config to set DefaultProject and add new issues aliases.

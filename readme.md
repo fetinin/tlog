@@ -16,7 +16,7 @@ log 1h review 22        # log 1 hour review for 22nd if current month
 
 ### MacOS
 ```bash
-brew install what-If-I/tap/tlog
+brew install what-if-i/tap/tlog
 ```
 
 ### Linux

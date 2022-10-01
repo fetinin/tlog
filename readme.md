@@ -5,7 +5,7 @@ Simple CLI that helps log time on JIRA issues.
 
 ### MacOS
 ```bash
-brew What-If-I/tap/tlog/
+brew install what-If-I/tap/tlog
 ```
 
 ### Linux

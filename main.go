@@ -165,7 +165,7 @@ func LoadConfig() (Config, error) {
 		if err != nil {
 			return Config{}, fmt.Errorf("create config: %w", err)
 		}
-		pterm.Println(pterm.Green(pterm.Sprintf("Config saved at: %s", homeConfig)))
+		pterm.Println(pterm.Green(pterm.Sprintf("Config saved at: %s\n", homeConfig)))
 	}
 
 	var cfg Config
@@ -254,7 +254,7 @@ func setupConfig() Config {
 		confirmed, _ := pterm.DefaultInteractiveConfirm.Show(pterm.Sprint(
 			pterm.LightBlue("Got it👌"),
 			pterm.LightBlue("\nYour login is: "), pterm.Yellow(cfg.JiraLogin),
-			pterm.LightBlue("\nPassword is: "), pterm.Yellow(cfg.JiraPassword),
+			pterm.LightBlue("\nPassword is: "), pterm.Yellow(strings.Repeat("*", len(cfg.JiraPassword))),
 			pterm.LightBlue("\nJIRA url is: "), pterm.Yellow(cfg.JiraURL),
 			pterm.LightBlue("\nCorrect?"),
 		))

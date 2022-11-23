@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-RELEASES_URL="https://github.com/What-If-I/tlog/releases"
+RELEASES_URL="https://github.com/fetinin/tlog/releases"
 FILE_BASENAME="tlog"
 
 test -z "$VERSION" && VERSION="$(curl -sfL -o /dev/null -w %{url_effective} "$RELEASES_URL/latest" |

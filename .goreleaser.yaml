@@ -43,11 +43,11 @@ changelog:
 
 brews:
   - tap:
-      owner: what-if-i
+      owner: fetinin
       name: homebrew-tap
     folder: Formula
     goarm: "7"
-    homepage: https://github.com/What-If-I/tlog
+    homepage: https://github.com/fetinin/tlog
     description: Simple CLI that helps log time on JIRA issues.
     license: MIT
     test: |

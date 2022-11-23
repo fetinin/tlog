@@ -16,17 +16,17 @@ log 1h review 22        # log 1 hour review for 22nd if current month
 
 ### MacOS
 ```bash
-brew install what-if-i/tap/tlog
+brew install fetinin/tap/tlog
 ```
 
 ### Linux
 ```bash
-curl -sfL https://raw.githubusercontent.com/What-If-I/tlog/master/install.sh | sh
+curl -sfL https://raw.githubusercontent.com/fetinin/tlog/master/install.sh | sh
 ```
 
 ### From source
 ```bash
-go install github.com/What-If-I/tlog@latest 
+go install github.com/fetinin/tlog@latest 
 ```
 _go >= 1.18 required_
 

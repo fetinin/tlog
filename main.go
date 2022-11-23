@@ -107,28 +107,29 @@ func convertToDay(input string) (time.Time, error) {
 		return todayStart.Add(-24 * time.Hour), nil
 	}
 
-	var day time.Weekday
+	var weekdayWant time.Weekday
 	switch input {
 	case "monday":
-		day = time.Monday
+		weekdayWant = time.Monday
 	case "tuesday":
-		day = time.Tuesday
+		weekdayWant = time.Tuesday
 	case "wednesday":
-		day = time.Wednesday
+		weekdayWant = time.Wednesday
 	case "thursday":
-		day = time.Thursday
+		weekdayWant = time.Thursday
 	case "friday":
-		day = time.Friday
+		weekdayWant = time.Friday
 	case "saturday":
-		day = time.Saturday
+		weekdayWant = time.Saturday
 	case "sunday":
-		day = time.Sunday
+		weekdayWant = time.Weekday(7) // week ends with sunday
 	default:
-		day = -1 // NoneDay
+		weekdayWant = -1 // NoneDay
 	}
 
-	if day != -1 {
-		return todayStart.Add(time.Duration(time.Now().Weekday()-day) * 24 * time.Hour), nil
+	if weekdayWant != -1 {
+		weekdayNow := time.Now().Weekday()
+		return todayStart.Add(time.Duration(weekdayWant-weekdayNow) * 24 * time.Hour), nil
 	}
 
 	if d, err := strconv.Atoi(input); err == nil {

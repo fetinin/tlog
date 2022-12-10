@@ -52,6 +52,8 @@ func Test_convertToDay(t *testing.T) {
 		{name: "friday", input: "friday", want: time.Now().Add(daysDiff(time.Friday, time.Now().Weekday()))},
 		{name: "saturday", input: "saturday", want: time.Now().Add(daysDiff(time.Saturday, time.Now().Weekday()))},
 		{name: "sunday", input: "sunday", want: time.Now().Add(daysDiff(time.Weekday(7), time.Now().Weekday()))},
+		{name: "mm.dd", input: "04.20", want: time.Date(time.Now().Year(), time.April, 20, 0, 0, 0, 0, time.UTC)},
+		{name: "yyyy.mm.dd", input: "1999.04.20", want: time.Date(1999, time.April, 20, 0, 0, 0, 0, time.UTC)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -25,7 +25,7 @@ func main() {
 	}
 
 	if len(os.Args) < 2 {
-		pterm.Println(pterm.Yellow("Usage: tlog <time> <task> [day] [comment]"))
+		pterm.Println(pterm.Yellow("Usage: tlog <time> <task> [date|day] [comment]"))
 		return
 	}
 
@@ -137,7 +137,15 @@ func convertToDay(input string) (time.Time, error) {
 		return time.Date(y, m, d, 0, 0, 0, 0, time.UTC), nil
 	}
 
-	return time.Time{}, fmt.Errorf("day of the week, or day number expected")
+	if t, err := time.Parse("01.02", input); err == nil {
+		return time.Date(time.Now().Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.UTC), nil
+	}
+
+	if t, err := time.Parse("2006.01.02", input); err == nil {
+		return t, nil
+	}
+
+	return time.Time{}, fmt.Errorf("[yy.]mm.dd, day of the week, or day of the month expected")
 }
 
 func convertToTimeLog(inputTime string) (time.Duration, error) {

@@ -9,7 +9,8 @@ log 30m review           # log 30 minutes into task aliased "review"
 log 1h review yesterday  # log 1 hour yesterday
 log 1h review monday     # log 1 hour review for monday for current week
 log 1h review mon        # log 1 hour review for monday for current week
-log 1h review 22         # log 1 hour review for 22nd if current month
+log 1h review 22         # log 1 hour review for 22nd of current month
+log 1h review 12.30      # log 1 hour review for 30st of December, current year
 log 1h review 2022.12.31 # log 1 hour review for 31st of December, 2022
 ```
 
